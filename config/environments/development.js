@@ -1,14 +1,21 @@
 const path = require('path');
-const logPath = path.join(__dirname, '../../logs/development.log');
 
 module.exports = {
-  web: {
-    port: 3000
-  },
-  logging: {
-    appenders: [
-      { type: 'console' },
-      { type: 'file', filename: logPath }
-    ]
-  }
+    web: {
+        port: 3000
+    },
+    logging: {
+        appenders: {
+            out: { type: 'console', layout: { type: 'coloured' } },
+            app: {
+                type: 'dateFile',
+                filename: path.join(__dirname, '../../logs/development'),
+                pattern: '-yyyy-MM-dd.log',
+                alwaysIncludePattern: true
+            }
+        },
+        categories: {
+            default: { appenders: ['out', 'app'], level: 'debug' }
+        }
+    }
 };
