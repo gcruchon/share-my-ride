@@ -1,8 +1,8 @@
 const express = require('express');
 
 class Server {
-  constructor() {
-    this.port = process.env.PORT || 3000;
+  constructor({ config }) {
+    this.config = config;
     this.express = express();
     this.express.disable('x-powered-by');
   }
@@ -14,8 +14,9 @@ class Server {
   }
 
   async start() {
-      await this.express.listen(this.port);
-      console.log('> Ready on http://localhost:' + this.port);
+      const http = await this.express.listen(this.config.web.port);
+      const { port } = http.address();
+      console.log(`[p ${process.pid}] Listening at port ${port}`);
   }
 }
 
