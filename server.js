@@ -1,25 +1,8 @@
-const express = require('express')
-const next = require('next')
+const container = require('./src/container');
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
-const port = process.env.PORT || 3000;
-
-app.prepare()
-.then(() => {
-  const server = express()
-
-  server.get('*', (req, res) => {
-    return handle(req, res)
+const app = container.resolve('app');
+app.start()
+  .catch((ex) => {
+    console.error(ex.stack)
+    process.exit(1)
   })
-
-  server.listen(port, (err) => {
-    if (err) throw err
-    console.log('> Ready on http://localhost:' + port)
-  })
-})
-.catch((ex) => {
-  console.error(ex.stack)
-  process.exit(1)
-})
