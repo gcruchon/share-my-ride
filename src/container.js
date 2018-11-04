@@ -22,7 +22,7 @@ const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware')
 
 const MongoUsersRepository = require('./infrastructure/repository/user/MongoUsersRepository');
 
-const { User: UserModel } = require('./infrastructure/database/models');
+const { DbUser: DbUserModel } = require('./infrastructure/database/models');
 
 const logger = require('./infrastructure/logging/logger');
 
@@ -52,7 +52,7 @@ container.register({
 
   //Database
   database: asFunction(database),
-  UserModel: asValue(UserModel),
+  DbUserModel: asValue(DbUserModel),
 
   //Operations
   createUser: asClass(CreateUser),

@@ -60,7 +60,7 @@ userSchema.post('save', function (error, doc, next) {
     }
 });
 
-const User = mongoose.model('User', userSchema);
+const DbUser = mongoose.model('DbUser', userSchema);
 
 
-module.exports = User;
+module.exports = DbUser;
