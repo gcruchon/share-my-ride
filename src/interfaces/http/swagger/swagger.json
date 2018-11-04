@@ -69,23 +69,23 @@
         }
       }
     },
-    "/users/{id}": {
+    "/users/{email}": {
       "get": {
         "operationId": "showUser",
         "tags": [ "Users" ],
         "parameters": [
           {
-            "name": "id",
+            "name": "email",
             "in": "path",
-            "description": "Id of user to show",
+            "description": "Email of user to show",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "email"
           }
         ],
         "responses": {
           "200": {
-            "description": "Return user with given id",
+            "description": "Return user with given email",
             "content": {
               "application/json": {
                 "schema": {
@@ -111,12 +111,12 @@
         "tags": [ "Users" ],
         "parameters": [
           {
-            "name": "id",
+            "name": "email",
             "in": "path",
-            "description": "Id of user to update",
+            "description": "Email of user to update",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "email"
           }
         ],
         "requestBody": {
@@ -158,12 +158,12 @@
         "tags": [ "Users" ],
         "parameters": [
           {
-            "name": "id",
+            "name": "email",
             "in": "path",
-            "description": "Id of user to delete",
+            "description": "Email of user to delete",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "email"
           }
         ],
         "responses": {
@@ -190,18 +190,18 @@
         "allOf": [
           { "$ref": "#/components/schemas/NewUser" },
           {
-            "required": [ "id" ],
+            "required": [ "email" ],
             "properties": {
               "id": {
-                "type": "integer",
-                "format": "int64"
+                "type": "string",
+                "format": "email"
               }
             }
           }
         ]
       },
       "NewUser": {
-        "required": [ "name" ],
+        "required": [ "lastname" ],
         "properties": {
           "name": {
             "type": "string"
@@ -240,7 +240,7 @@
           },
           "details": {
             "type": "string",
-            "enum": [ "User with id {id} not found" ]
+            "enum": [ "User with email {email} not found" ]
           }
         }
       }
