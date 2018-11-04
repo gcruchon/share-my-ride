@@ -4,8 +4,11 @@
   "description": "Share your ride and get points",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
+    "test": "npm run test:unit && npm run test:features",
+    "test:unit": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.unit",
+    "test:features": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.features",
+    "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "postinstall": "next build"
@@ -36,8 +39,15 @@
     "swagger-ui-express": "^4.0.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-change": "^2.1.2",
+    "cross-env": "^5.2.0",
+    "dirty-chai": "^2.0.1",
     "eslint": "^5.8.0",
     "express-status-monitor": "^1.2.3",
-    "request": "^2.88.0"
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "request": "^2.88.0",
+    "supertest": "^3.3.0"
   }
 }

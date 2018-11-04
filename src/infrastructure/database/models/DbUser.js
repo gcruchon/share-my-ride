@@ -65,7 +65,7 @@ userSchema.post('save', function (error, doc, next) {
     }
 });
 
-const DbUser = mongoose.model('DbUser', userSchema);
+const DbUser = mongoose.model('User', userSchema);
 
 
 module.exports = DbUser;

@@ -1,5 +1,3 @@
-require('dotenv').load();
-
 const fs = require('fs');
 const path = require('path');
 
@@ -22,6 +20,11 @@ function loadDbConfig() {
   }
 
   if (fs.existsSync(path.join(__dirname, './database.js'))) {
-    return require('./database')[ENV];
+    const { username, password, database, host, port, dialect } = require('./database')[ENV];
+    if (username && password) {
+      return `${dialect}://${username}:${password}@${host}:${port}/${database}`;
+    } else {
+      return `${dialect}://${host}:${port}/${database}`;
+    }
   }
 }

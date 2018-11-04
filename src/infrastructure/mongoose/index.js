@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-module.exports = ({ logger }) => {
+
+module.exports = ({ logger, config }) => {
+    const { username, password, database, host, port, dialect } = config.db;
     let uri = process.env.DATABASE_URL;
 
     // set mongoose Promise to Bluebird
@@ -13,16 +15,18 @@ module.exports = ({ logger }) => {
     });
 
     // print mongoose logs in dev env
-    mongoose.set('debug', true);
+    if (config.env === 'development') {
+        mongoose.set('debug', true);
+    }
 
-    mongoose.connect(uri, {
+    mongoose.connect(config.db, {
         keepAlive: 1,
         useNewUrlParser: true
     });
 
     return new Promise((resolve, reject) => {
         mongoose.connection.on('connected', () => {
-            logger.info(`Mongoose default connection is open to ${uri}`);
+            logger.debug(`Mongoose default connection is open to ${config.db}`);
             resolve(mongoose.connection)
         });
     });
