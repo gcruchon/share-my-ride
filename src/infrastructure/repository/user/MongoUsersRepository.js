@@ -53,7 +53,7 @@ class MongoUserRepository {
     const dbUser = await this._getDbUserByEmail({ email });
     if (!dbUser) {
       const error = new Error('ValidationError');
-      error.details = { message: 'User not exist' };
+      error.details = { message: `User with email ${email} not found` };
       throw error;
     }
 
