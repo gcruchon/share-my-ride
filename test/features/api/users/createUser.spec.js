@@ -3,12 +3,16 @@ const emptyDatabase = require('test/support/empty-database');
 const { expect } = require('chai');
 
 const testUser = {
-  email: "test@test.com",
+  email: "test-create@test.com",
   lastname: "LASTNAME_TEST",
   firstname: "Firstname_TEST"
 };
 
 before(async () => {
+  await emptyDatabase();
+});
+
+after(async () => {
   await emptyDatabase();
 });
 
@@ -38,13 +42,51 @@ describe('API :: POST /api/users', () => {
 
   context('when email is missing', () => {
     it('does not create and returns 400 with the validation error', async () => {
-      let { email, ...testUserWIthoutEmail } = testUser;
+      let { email, ...testUserWithoutEmail } = testUser;
       const { body } = await request()
         .post('/api/users')
-        .send(testUserWIthoutEmail)
+        .send(testUserWithoutEmail)
         .expect(400);
       expect(body.type).to.equal('ValidationError');
       expect(body.details[0].message).to.equal('"email" is required');
     });
   });
+
+  context('when lastname is missing', () => {
+    it('does not create and returns 400 with the validation error', async () => {
+      let { lastname, ...testUserWithoutLastname } = testUser;
+      const { body } = await request()
+        .post('/api/users')
+        .send(testUserWithoutLastname)
+        .expect(400);
+      expect(body.type).to.equal('ValidationError');
+      expect(body.details[0].message).to.equal('"lastname" is required');
+    });
+  });
+
+  context('when firstname is missing', () => {
+    it('does not create and returns 400 with the validation error', async () => {
+      let { firstname, ...testUserWithoutFirstname } = testUser;
+      const { body } = await request()
+        .post('/api/users')
+        .send(testUserWithoutFirstname)
+        .expect(400);
+      expect(body.type).to.equal('ValidationError');
+      expect(body.details[0].message).to.equal('"firstname" is required');
+    });
+  });
+
+  context('when several fields are missing', () => {
+    it('does not create and returns 400 with the validation error and the list of missing fields', async () => {
+      let { firstname, lastname, ...testUserWithMissingFields } = testUser;
+      const { body } = await request()
+        .post('/api/users')
+        .send(testUserWithMissingFields)
+        .expect(400);
+      expect(body.type).to.equal('ValidationError');
+      expect(body.details[0].message).to.equal('"lastname" is required');
+      expect(body.details[1].message).to.equal('"firstname" is required');
+    });
+  });
+
 });
