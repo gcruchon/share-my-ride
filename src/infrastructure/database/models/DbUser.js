@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
  */
 userSchema.statics = {
     /**
-     * Get user
+     * Get user by email
      * @param {String} email - The email of user.
      * @returns {Promise<User, APIError>}
      */
@@ -20,6 +20,11 @@ userSchema.statics = {
         return this.findOne({ email });
     },
 
+    /**
+     * Get user by email
+     * @param {String} email - The email of user.
+     * @returns {boolean}
+     */
     exist(email) {
         return this.findOne({ email })
             .exec()
@@ -36,7 +41,7 @@ userSchema.statics = {
      * List users in descending order of 'createdAt' timestamp.
      * @param {number} skip - Number of users to be skipped.
      * @param {number} limit - Limit number of users to be returned.
-     * @returns {Promise<User[]>}
+     * @returns {Promise<DbUser[]>}
      */
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
