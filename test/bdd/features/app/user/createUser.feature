@@ -7,11 +7,21 @@ Feature: Create a user
         Given I want to create this user:
         | lastname  | firstname  | email                     |
         | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  |
+        And user "gilles.cruchon@gmail.com" does not exist
         When I create this user
         Then the creation is successful
         And I get the user
         | lastname  | firstname  | email                     | score |
         | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  | 0     |
+
+    Scenario: Create user duplicated user
+        Given I want to create this user:
+        | lastname  | firstname  | email                     |
+        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  |
+        And user "gilles.cruchon@gmail.com" already exists
+        When I create this user
+        Then the creation is failing
+        And I get a "User already exist" error
 
     Scenario: Create a user without email
         Given I want to create this user:
@@ -36,7 +46,6 @@ Feature: Create a user
         | lastname  | email                     |
         | CRUCHON   | gilles.cruchon@gmail.com  |
         When I create this user
-        When I create this user
         Then the creation is failing
         And I get the missing fields:
         | firstname |
@@ -45,7 +54,6 @@ Feature: Create a user
         Given I want to create this user:
         | email                     |
         | gilles.cruchon@gmail.com  |
-        When I create this user
         When I create this user
         Then the creation is failing
         And I get the missing fields:
