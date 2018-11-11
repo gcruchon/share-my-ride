@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
-    "test": "npm run test:unit && npm run test:features",
+    "test": "npm run test:unit && npm run test:bdd && npm run test:features",
     "test:unit": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.unit",
     "test:features": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.features",
+    "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test cucumber-js test/bdd/features -r test/bdd/steps",
     "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
@@ -42,12 +43,14 @@
     "chai": "^4.2.0",
     "chai-change": "^2.1.2",
     "cross-env": "^5.2.0",
+    "cucumber": "^5.0.2",
     "dirty-chai": "^2.0.1",
     "eslint": "^5.8.0",
     "express-status-monitor": "^1.2.3",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "request": "^2.88.0",
+    "sinon": "^7.1.1",
     "supertest": "^3.3.0"
   }
 }
