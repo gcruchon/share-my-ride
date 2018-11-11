@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 // Arrange
-Given('I have this user', function (dataTable) {
+Given('I want to create this user:', function (dataTable) {
     const users = dataTable.hashes();
     if (users.length) {
         this.user = users[0];
