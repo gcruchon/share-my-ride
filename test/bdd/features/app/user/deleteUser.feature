@@ -1,7 +1,8 @@
 @app @user @delete
 Feature: Delete a user
 
-    User can be either an existing driver or an existing passenger
+    User can be either an existing driver or an existing passenger.
+    If user cannot be deleted, then the output will explain you why (most likely, this user does not exist).
 
     Scenario: Delete an existing user
         Given the affected user is:

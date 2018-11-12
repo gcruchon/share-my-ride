@@ -1,7 +1,9 @@
 @app @user @create
 Feature: Create a user
 
-    User can be either a driver or a passenger
+    User can be either a driver or a passenger.
+    After creating a user, you should receive the created user's info.
+    Should you fail to input a required field, the output should give your the list of missing required fields.
 
     Scenario: Create a user providing all required fields
         Given the affected user is:
