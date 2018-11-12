@@ -1,4 +1,4 @@
-const { Before, When, Then, After } = require('cucumber')
+const { Before, When, Then, After } = require('cucumber');
 const sinon = require('sinon');
 const { expect } = require('chai');
 
@@ -10,7 +10,7 @@ const createUser = new CreateUser({ usersRepository });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
 
 // Prepare
-Before({tags: "@app and @user and @create"}, function () {
+Before({ tags: "@app and @user and @create" }, function () {
     createUser.on(SUCCESS, this.spySuccess);
     createUser.on(ERROR, this.spyError);
     createUser.on(VALIDATION_ERROR, this.spyValidationError);
@@ -45,7 +45,7 @@ Then('I get a {string} error', function (errorMessage) {
 });
 
 // Clean
-After({tags: "@app and @user and @create"}, function () {
+After({ tags: "@app and @user and @create" }, function () {
     createUser.removeAllListeners(SUCCESS);
     createUser.removeAllListeners(ERROR);
     createUser.removeAllListeners(VALIDATION_ERROR);

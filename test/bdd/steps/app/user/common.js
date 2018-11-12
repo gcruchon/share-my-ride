@@ -1,10 +1,10 @@
-const { Before, Given, Then, After } = require('cucumber')
+const { Before, Given, Then, After } = require('cucumber');
 const sinon = require('sinon');
 
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 
 // Prepare
-Before({tags: "@app and @user"}, function () {
+Before({ tags: "@app and @user" }, function () {
     this.spySuccess = sinon.spy();
     this.spyError = sinon.spy();
     this.spyValidationError = sinon.spy();
@@ -52,7 +52,7 @@ Then('I get the user', function (dataTable) {
 });
 
 // Clean
-After({tags: "@app and @user"}, function () {
+After({ tags: "@app and @user" }, function () {
     sinon.reset();
     this.spySuccess = null;
     this.spyError = null;
