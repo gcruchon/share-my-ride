@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
-    "test": "npm run test:unit && npm run test:bdd && npm run test:features",
+    "test": "npm run test:unit && npm run test:bdd && npm run test:atdd",
     "test:unit": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.unit",
-    "test:features": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.features",
+    "test:atdd": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.atdd",
     "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test cucumber-js test/bdd/features -r test/bdd/steps",
     "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "build": "next build",
