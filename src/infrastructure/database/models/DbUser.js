@@ -65,6 +65,11 @@ userSchema.post('save', function (error, doc, next) {
     }
 });
 
+userSchema.path('email').validate(function (email) {
+    var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    return emailRegex.test(email.text); // Assuming email has a text attribute
+ }, 'The e-mail field is not valid.')
+
 const DbUser = mongoose.model('User', userSchema);
 
 
