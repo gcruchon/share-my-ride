@@ -20,6 +20,15 @@ describe('Infra :: Database :: Models', () => {
             done();
         });
 
+        it('should be invalid if email is in the wrong format', (done) => {
+            const invalidUser = new DbUser({ email: "toto", lastname: "CRUCHON", firstname: "Gilles" });
+            const error = invalidUser.validateSync();
+            expect(error.name).to.equal('ValidationError');
+            expect(error.errors).to.exist;
+            expect(error.errors.email).to.exist;
+            done();
+        });
+
         it('should be invalid if lastname is empty', (done) => {
             const invalidUser = new DbUser({ email: "gilles.cruchon@gmail.com", firstname: "Gilles" });
             const error = invalidUser.validateSync();

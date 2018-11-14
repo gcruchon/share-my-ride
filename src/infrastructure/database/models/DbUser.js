@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -64,6 +65,14 @@ userSchema.post('save', function (error, doc, next) {
         next(error);
     }
 });
+
+userSchema.path('email').validate(function (email) {
+    const result = Joi.validate(email, Joi.string().email());
+    if( result.error ){
+        return false;
+    }
+    return true;
+ }, 'The e-mail field is not valid.')
 
 const DbUser = mongoose.model('User', userSchema);
 
