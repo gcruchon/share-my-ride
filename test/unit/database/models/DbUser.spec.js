@@ -4,17 +4,15 @@ const DbUser = require('src/infrastructure/database/models/DbUser');
 
 describe('Infra :: Database :: Models', () => {
     describe('DbUser', () => {
-        it('should be invalid if email is empty', (done) => {
-            const invalidUser = new DbUser({ lastname: "CRUCHON", firstname: "Gilles" });
-            const error = invalidUser.validateSync();
-            expect(error.name).to.equal('ValidationError');
-            expect(error.errors).to.exist;
-            expect(error.errors.email).to.exist;
+        it('should be valid if all is OK', (done) => {
+            const validUser = new DbUser({ email: "gilles.cruchon@gmail.com", lastname: "CRUCHON", firstname: "Gilles" });
+            const error = validUser.validateSync();
+            expect(error).to.be.undefined;
             done();
         });
 
-        it('should be invalid if email is in the wrong format', (done) => {
-            const invalidUser = new DbUser({ email: "toto", lastname: "CRUCHON", firstname: "Gilles" });
+        it('should be invalid if email is empty', (done) => {
+            const invalidUser = new DbUser({ lastname: "CRUCHON", firstname: "Gilles" });
             const error = invalidUser.validateSync();
             expect(error.name).to.equal('ValidationError');
             expect(error.errors).to.exist;

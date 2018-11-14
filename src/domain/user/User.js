@@ -3,7 +3,8 @@ const { attributes } = require('structure');
 const User = attributes({
     email: {
         type: String,
-        required: true
+        required: true,
+        email: true
     },
     lastname: {
         type: String,

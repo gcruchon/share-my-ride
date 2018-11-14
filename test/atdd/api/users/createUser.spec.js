@@ -3,7 +3,7 @@ const emptyDatabase = require('test/support/empty-database');
 const { expect } = require('chai');
 
 const testUser = {
-  email: "test-create@test.com",
+  email: "testcreate@test.com",
   lastname: "LASTNAME_TEST",
   firstname: "Firstname_TEST"
 };
@@ -49,6 +49,19 @@ describe('API :: POST /api/users', () => {
         .expect(400);
       expect(body.type).to.equal('ValidationError');
       expect(body.details[0].message).to.equal('"email" is required');
+    });
+  });
+
+  context('when email is in the wrong format', () => {
+    it('does not create and returns 400 with the validation error', async () => {
+      let { email, ...testUserWithInvalidEmail } = testUser;
+      testUserWithInvalidEmail.email = "toto";
+      const { body } = await request()
+        .post('/api/users')
+        .send(testUserWithInvalidEmail)
+        .expect(400);
+      expect(body.type).to.equal('ValidationError');
+      expect(body.details[0].message).to.equal('"email" must be a valid email');
     });
   });
 

@@ -3,7 +3,7 @@ const emptyDatabase = require('test/support/empty-database');
 const { expect } = require('chai');
 
 const testUser = {
-  email: "test-delete@test.com",
+  email: "testdelete@test.com",
   lastname: "LASTNAME_TEST",
   firstname: "Firstname_TEST"
 };
