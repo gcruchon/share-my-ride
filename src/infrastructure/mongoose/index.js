@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 
 
 module.exports = ({ logger, config }) => {
-    const { username, password, database, host, port, dialect } = config.db;
-    let uri = process.env.DATABASE_URL;
-
     // set mongoose Promise to Bluebird
     mongoose.Promise = Promise;
 
