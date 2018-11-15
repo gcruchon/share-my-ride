@@ -20,11 +20,17 @@ function loadDbConfig() {
   }
 
   if (fs.existsSync(path.join(__dirname, './database.js'))) {
-    const { username, password, database, host, port, dialect } = require('./database')[ENV];
-    if (username && password) {
-      return `${dialect}://${username}:${password}@${host}:${port}/${database}`;
+    const dbConfig =  require('./database')[ENV];
+
+    if( dbConfig && dbConfig.host ){
+      const { username, password, database, host, port, dialect } = require('./database')[ENV];
+      if (username && password) {
+        return `${dialect}://${username}:${password}@${host}:${port}/${database}`;
+      } else {
+        return `${dialect}://${host}:${port}/${database}`;
+      }
     } else {
-      return `${dialect}://${host}:${port}/${database}`;
+      return dbConfig;
     }
   }
 }
