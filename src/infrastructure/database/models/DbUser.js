@@ -53,28 +53,30 @@ userSchema.statics = {
     }
 };
 
-
-// Handler **must** take 3 parameters: the error that occurred, the document
-// in question, and the `next()` function
-userSchema.post('save', function (error, doc, next) {
+const errorMessageTransformer = (error, doc, next) => {
     if (error.code === 11000) {
-        const error = new Error('ValidationError');
-        error.details = 'Duplicate found';
-        next(error);
+        const newError = new Error('ValidationError');
+        newError.details = 'Duplicate found';
+        next(newError);
     } else {
         next(error);
     }
-});
+};
+
+// Handler **must** take 3 parameters: the error that occurred, the document
+// in question, and the `next()` function
+userSchema.post('save', errorMessageTransformer);
 
 userSchema.path('email').validate(function (email) {
     const result = Joi.validate(email, Joi.string().email());
-    if( result.error ){
+    if (result.error) {
         return false;
     }
     return true;
- }, 'The e-mail field is not valid.')
+}, 'The e-mail field is not valid.')
 
 const DbUser = mongoose.model('User', userSchema);
 
 
 module.exports = DbUser;
+module.exports.errorMessageTransformer = errorMessageTransformer

@@ -3,6 +3,38 @@ const sinon = require('sinon');
 const DbUser = require('src/infrastructure/database/models/DbUser');
 
 describe('Infra :: Database :: Models', () => {
+    describe('DbUser - middleware', () => {
+        describe('errorMessageTransformer', () => {
+            it('should transform a 11000 error', (done) => {
+                const inputError = new Error('MongoError');
+                inputError.code = 11000;
+
+                const next = sinon.spy();
+
+                DbUser.errorMessageTransformer(inputError, {}, next);
+
+                sinon.assert.calledOnce(next);
+                const errorThrown = next.lastCall.args[0];
+                expect(errorThrown).to.be.an('Error');
+                expect(errorThrown.message).to.equal('ValidationError');
+                expect(errorThrown.details).to.equal('Duplicate found');
+                done();
+            });
+
+            it('should not transform any error other than a 11000 error', (done) => {
+                const inputError = new Error('MongoError');
+                inputError.code = 42;
+
+                const next = sinon.spy();
+
+                DbUser.errorMessageTransformer(inputError, {}, next);
+
+                sinon.assert.calledOnce(next);
+                sinon.assert.calledWith(next, inputError);
+                done();
+            });
+        });
+    });
     describe('DbUser', () => {
         it('should be valid if all is OK', (done) => {
             const validUser = new DbUser({ email: "gilles.cruchon@gmail.com", lastname: "CRUCHON", firstname: "Gilles" });
@@ -71,6 +103,21 @@ describe('Infra :: Database :: Models', () => {
             sinon.assert.calledOnce(findOneStub);
             sinon.assert.calledWith(findOneStub, { email: "gilles.cruchon@gmail.com" });
             expect(result).to.equal(true);
+            findOneStub.restore();
+        });
+
+        it('should check if a user does not exists', async () => {
+            const mockFindOne = {
+                exec: async () => {
+                    return null;
+                }
+            };
+            const findOneStub = sinon.stub(DbUser, 'findOne').returns(mockFindOne);
+
+            const result = await DbUser.exist("gilles.cruchon@gmail.com");
+            sinon.assert.calledOnce(findOneStub);
+            sinon.assert.calledWith(findOneStub, { email: "gilles.cruchon@gmail.com" });
+            expect(result).to.equal(false);
             findOneStub.restore();
         });
 
