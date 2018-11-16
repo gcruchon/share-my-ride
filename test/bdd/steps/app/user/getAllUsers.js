@@ -1,6 +1,5 @@
 const { Before, Given, Then, When, After } = require('cucumber');
 const sinon = require('sinon');
-const mongoose = require('mongoose');
 
 const GetAllUsers = require('src/app/user/GetAllUsers');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');
@@ -13,22 +12,6 @@ const { SUCCESS, ERROR } = getAllUser.outputs;
 Before({ tags: "@app and @user and @getAll" }, function () {
     getAllUser.on(SUCCESS, this.spySuccess);
     getAllUser.on(ERROR, this.spyError);
-    this.stubDbUserList = sinon.stub(DbUserModel, 'list');
-});
-
-// Arrange
-Given('the system does not contain any users', function () {
-    this.userList = [];
-    this.stubDbUserList.resolves([]);
-});
-Given('the system contains these users:', function (dataTable) {
-    this.userList = dataTable.hashes();
-    const mockUserList = this.userList.map(
-        (userInput) => {
-            return Object.assign(userInput, { score: 0, _id: mongoose.Types.ObjectId(), createdAt: "2018-11-12T22:51:02.551Z", updatedAt: "2018-11-12T22:51:02.551Z", __v: 0 });
-        }
-    );
-    this.stubDbUserList.resolves(mockUserList);
 });
 
 // Act
@@ -50,5 +33,4 @@ Then('I get these users:', function (dataTable) {
 After({ tags: "@app and @user and @getAll" }, function () {
     getAllUser.removeAllListeners(SUCCESS);
     getAllUser.removeAllListeners(ERROR);
-    this.stubDbUserList.restore();
 })
