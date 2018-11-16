@@ -1,5 +1,4 @@
 const { Before, When, Then, After } = require('cucumber');
-const sinon = require('sinon');
 const { expect } = require('chai');
 
 const CreateUser = require('src/app/user/CreateUser');
@@ -36,12 +35,6 @@ Then('I get the missing fields:', function (dataTable) {
     expect(errorThrown).to.be.a('Error');
     expect(errorThrown.message).to.equal('ValidationError');
     expect(errorThrown.details).to.deep.equal(expectedErrorDetails);
-});
-Then('I get a {string} error', function (errorMessage) {
-    const errorThrown = this.spyValidationError.lastCall.args[0];
-    expect(errorThrown).to.be.a('Error');
-    expect(errorThrown.message).to.equal('ValidationError');
-    expect(errorThrown.details).to.deep.equal({ message: errorMessage });
 });
 
 // Clean
