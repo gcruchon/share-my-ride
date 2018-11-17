@@ -3,7 +3,10 @@
   "exclude": [
     "container.js",
     "app/Application.js",
-    "interfaces/http"
+    "app/user/index.js",
+    "infrastructure/mongoose",
+    "interfaces/http",
+    "coverage"
   ],
   "reporter": [
     "html",

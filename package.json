@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
-    "test": "npm run test:unit && npm run test:bdd && npm run test:atdd",
-    "test:unit": "cross-env NODE_PATH=. NODE_ENV=test mocha --opts test/mocha.opts.unit",
+    "test": "npm run test:unit && npm run test:bdd && npm run test:atdd && npm run report",
+    "test:unit": "cross-env NODE_PATH=. NODE_ENV=test nyc -a --silent mocha --opts test/mocha.opts.unit",
     "test:atdd": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.atdd",
-    "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test cucumber-js test/bdd/features -r test/bdd/steps",
-    "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
+    "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test nyc -a --silent --no-clean cucumber-js test/bdd/features -r test/bdd/steps",
+    "report": "nyc report",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "postinstall": "next build"
