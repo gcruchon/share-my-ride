@@ -31,7 +31,12 @@ class MongoUserRepository {
     // Validate user throw error if any
     await this._validate(user);
     const dbUser = await this._getDbUserByEmail(user);
-    const { lastname, firstname } = user;
+    const { email, lastname, firstname } = user;
+    if (!dbUser) {
+      const error = new Error('ValidationError');
+      error.details = { message: `User with email ${email} not found` };
+      throw error;
+    }
     dbUser.lastname = lastname;
     dbUser.firstname = firstname;
     const updatedDbUser = await dbUser.save();
