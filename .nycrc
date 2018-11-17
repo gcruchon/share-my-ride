@@ -5,6 +5,7 @@
     "app/Application.js",
     "app/user/index.js",
     "infrastructure/mongoose",
+    "infrastructure/logging/logger.js",
     "interfaces/http",
     "coverage"
   ],
