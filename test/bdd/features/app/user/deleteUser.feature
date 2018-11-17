@@ -6,8 +6,8 @@ Feature: Delete a user
 
     Scenario: Delete an existing user
         Given the affected user is:
-        | lastname  | firstname  | email                     |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  |
+        | lastname  | firstname  | email                     | score |
+        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  | 0     |
         And user "gilles.cruchon@gmail.com" already exists in the system
         When I delete user "gilles.cruchon@gmail.com"
         Then the operation is successful
