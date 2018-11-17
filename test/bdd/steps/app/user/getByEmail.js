@@ -1,6 +1,4 @@
-const { Before, Given, Then, When, After } = require('cucumber');
-const sinon = require('sinon');
-const mongoose = require('mongoose');
+const { Before, When, After } = require('cucumber');
 
 const GetByEmail = require('src/app/user/GetByEmail');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');

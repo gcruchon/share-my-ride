@@ -1,4 +1,4 @@
-const { Before, Given, Then, When, After } = require('cucumber');
+const { Before, Then, When, After } = require('cucumber');
 const sinon = require('sinon');
 
 const GetAllUsers = require('src/app/user/GetAllUsers');
