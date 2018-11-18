@@ -10,6 +10,7 @@
     "test:atdd": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.atdd",
     "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test nyc -a --silent --no-clean cucumber-js test/bdd/features -r test/bdd/steps",
     "report": "nyc report",
+    "lint": "eslint {src,test,config,components,pages}/**/*.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "postinstall": "next build"
@@ -47,6 +48,7 @@
     "cucumber": "^5.0.2",
     "dirty-chai": "^2.0.1",
     "eslint": "^5.8.0",
+    "eslint-plugin-react": "^7.11.1",
     "express-status-monitor": "^1.2.3",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
