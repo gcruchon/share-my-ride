@@ -1,5 +1,5 @@
 const express = require('express');
-const next = require('next')
+const next = require('next');
 
 class Server {
   constructor({ config, router, logger }) {
@@ -17,7 +17,7 @@ class Server {
     await this.next.prepare();
 
     const handle = this.next.getRequestHandler();
-    this.express.get('*', (req, res) => { return handle(req, res) });
+    this.express.get('*', (req, res) => { return handle(req, res); });
 
     const http = await this.express.listen(this.config.web.port);
     const { port } = http.address();

@@ -8,8 +8,11 @@
     "mocha": true
   },
   "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "extends": [
     "eslint:recommended",
@@ -25,7 +28,10 @@
     ],
     "indent": [
       "error",
-      4
+      2
+    ],
+    "prefer-destructuring": [
+      "error"
     ],
     "quotes": [
       "error",

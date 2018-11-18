@@ -9,37 +9,37 @@ const createUser = new CreateUser({ usersRepository });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
 
 // Prepare
-Before({ tags: "@app and @user and @create" }, function () {
-    createUser.on(SUCCESS, this.spySuccess);
-    createUser.on(ERROR, this.spyError);
-    createUser.on(VALIDATION_ERROR, this.spyValidationError);
+Before({ tags: '@app and @user and @create' }, function () {
+  createUser.on(SUCCESS, this.spySuccess);
+  createUser.on(ERROR, this.spyError);
+  createUser.on(VALIDATION_ERROR, this.spyValidationError);
 });
 
 // Act
 When('I create this user', async function () {
-    await createUser.execute(this.user);
+  await createUser.execute(this.user);
 });
 
 // Assert
 Then('I get the missing fields:', function (dataTable) {
-    const expectedErrorDetails = dataTable.raw().map(
-        (fieldArray) => {
-            const field = fieldArray[0];
-            return {
-                message: `"${field}" is required`,
-                path: field
-            }
-        }
-    );
-    const errorThrown = this.spyValidationError.lastCall.args[0];
-    expect(errorThrown).to.be.a('Error');
-    expect(errorThrown.message).to.equal('ValidationError');
-    expect(errorThrown.details).to.deep.equal(expectedErrorDetails);
+  const expectedErrorDetails = dataTable.raw().map(
+    (fieldArray) => {
+      const [ field ] = fieldArray;
+      return {
+        message: `"${field}" is required`,
+        path: field
+      };
+    }
+  );
+  const [ errorThrown ] = this.spyValidationError.lastCall.args;
+  expect(errorThrown).to.be.a('Error');
+  expect(errorThrown.message).to.equal('ValidationError');
+  expect(errorThrown.details).to.deep.equal(expectedErrorDetails);
 });
 
 // Clean
-After({ tags: "@app and @user and @create" }, function () {
-    createUser.removeAllListeners(SUCCESS);
-    createUser.removeAllListeners(ERROR);
-    createUser.removeAllListeners(VALIDATION_ERROR);
-})
+After({ tags: '@app and @user and @create' }, function () {
+  createUser.removeAllListeners(SUCCESS);
+  createUser.removeAllListeners(ERROR);
+  createUser.removeAllListeners(VALIDATION_ERROR);
+});

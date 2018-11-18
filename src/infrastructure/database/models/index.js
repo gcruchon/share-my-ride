@@ -1,3 +1,3 @@
 module.exports = {
-    DbUser: require('./DbUser')
+  DbUser: require('./DbUser')
 };

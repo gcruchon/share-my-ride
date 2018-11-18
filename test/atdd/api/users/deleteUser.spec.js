@@ -3,9 +3,9 @@ const emptyDatabase = require('test/support/empty-database');
 const { expect } = require('chai');
 
 const testUser = {
-  email: "testdelete@test.com",
-  lastname: "LASTNAME_TEST",
-  firstname: "Firstname_TEST"
+  email: 'testdelete@test.com',
+  lastname: 'LASTNAME_TEST',
+  firstname: 'Firstname_TEST'
 };
 
 before(async () => {
@@ -22,18 +22,18 @@ after(async () => {
 describe('API :: DELETE /api/users', () => {
   context('when sent data is ok', () => {
     it('creates and returns 200 and the deleted user', async () => {
-      const { body, req } = await request()
+      const { body } = await request()
         .delete('/api/users/' + testUser.email)
         .expect(200);
 
-      expectedResponse = Object.assign(testUser, { score: 0 });
+      const expectedResponse = Object.assign(testUser, { score: 0 });
       expect(body).to.deep.equal(expectedResponse);
     });
   });
 
   context('when user does not exist', () => {
     it('returns 404 with the validation error', async () => {
-      const { body, req } = await request()
+      const { body } = await request()
         .delete('/api/users/' + testUser.email)
         .expect(404);
       expect(body.type).to.equal('ValidationError');
