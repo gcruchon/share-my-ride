@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const CreateUser = require('src/app/user/CreateUser');
 
 describe('App :: user :: CreateUser', () => {
-    context('when repository has an error (but not a ValidationError)', () => {
+    context('when repository throws an error (but not a ValidationError)', () => {
         it('should trigger an ERROR event', async () => {
             const error = new Error('DummyError');
             const usersRepository = {
@@ -30,10 +30,6 @@ describe('App :: user :: CreateUser', () => {
             sinon.assert.notCalled(spyValidationError);
             sinon.assert.calledOnce(spyError);
             sinon.assert.calledWith(spyError, error);
-
-            expect(() => {
-                operation.on(operation.outputs.SUCCESS, () => { });
-            }).to.not.throw;
         });
     });
 
