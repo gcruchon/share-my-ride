@@ -1,6 +1,6 @@
 module.exports = {
     web: {
-      port: 3001
+        port: 3001
     },
     logging: {
         appenders: {
@@ -10,4 +10,4 @@ module.exports = {
             default: { appenders: ['out'], level: 'info' }
         }
     }
-  };
+};

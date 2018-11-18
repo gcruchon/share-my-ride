@@ -10,7 +10,7 @@
     "test:atdd": "cross-env NODE_PATH=. NODE_ENV=test mocha --exit --opts test/mocha.opts.atdd",
     "test:bdd": "cross-env NODE_PATH=. NODE_ENV=test nyc -a --silent --no-clean cucumber-js test/bdd/features -r test/bdd/steps",
     "report": "nyc report",
-    "lint": "eslint {src,test,config,components,pages}/**/*.js",
+    "lint": "eslint --fix {src,test,config,components,pages}/**/*.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "postinstall": "next build"

@@ -4,8 +4,8 @@ const database = container.resolve('database');
 const DbUserModel = container.resolve('DbUserModel');
 
 module.exports = async() => {
-    logger.debug("Deleting users from test database...");
+    logger.debug('Deleting users from test database...');
     await database;
     await DbUserModel.deleteMany({});
-    logger.debug("All users have been removed!");
-}
+    logger.debug('All users have been removed!');
+};
