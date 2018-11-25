@@ -1,7 +1,6 @@
 ---
 name: 💬 User story
 about: I want to describe a use-case
-
 ---
 
 ## {Title of the User Story}

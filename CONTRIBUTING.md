@@ -2,70 +2,68 @@
 
 First, thank you to help this application to live
 
-# Dev environment
+## Dev environment
 
-* VS Code: https://code.visualstudio.com/
-    * Plugins installed:
-        * Mandatory:
-            * Azure Account
-            * Azure App Service
-            * Cucumber (Gherkin) Full Support
-            * ESLint
-            * markdownlint
-        * If you don't like command-line:
-            * Git Blame
-            * Git History
-            * Git Stash
-
-
+* VS Code: [download](https://code.visualstudio.com/)
+  * Plugins installed:
+    * Mandatory:
+      * Azure Account
+      * Azure App Service
+      * Cucumber (Gherkin) Full Support
+      * ESLint
+      * markdownlint
+    * If you don't like command-line:
+      * Git Blame
+      * Git History
+      * Git Stash
 * NVM
-    * MacOS X: https://github.com/creationix/nvm
-    * Windows: https://github.com/coreybutler/nvm-windows
-* MongoDB: https://www.mongodb.com/ (v3.6.x)
+  * MacOS X: [download](https://github.com/creationix/nvm)
+  * Windows: [download](https://github.com/coreybutler/nvm-windows)
+* MongoDB: [download](https://www.mongodb.com/) (v3.6.x)
 * git: last version
 
-# Setup
+## Setup
 
- * NVM: make sure you are running Node v8.12.0 | NPM v6.4.1
- * Clone git repo
- * Run `npm install`
- * Copy `/config/database.sample.js` to `/config/database.js` and change according to your current MongoDB config
+* NVM: make sure you are running Node v8.12.0 | NPM v6.4.1
+* Clone git repo
+* Run `npm install`
+* Copy `/config/database.sample.js` to `/config/database.js` and change according to your current MongoDB config
 
-# Running the application
+## Running the application
 
 Launch `npm run dev`
 
-# Standards
+## Standards
 
-## Git
+### Git
+
 * Commit messages should follow [AngularJS commit conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
 * Contributors should follow the [Git flow](https://nvie.com/posts/a-successful-git-branching-model/)
-    * master: for production
-    * develop: development branch
-    * feature/xxxxx: developper should start a such branch for each new development
-    * release/xxxxx
-    * hotfix/xxxxx
+  * master: for production
+  * develop: development branch
+  * feature/xxxxx: developper should start a such branch for each new development
+  * release/xxxxx
+  * hotfix/xxxxx
 * Pull request
-    * Mandatory to merge from `feature/xxxxx` to `develop` (pushing directly to `develop` is not allowed)
-    * Should have at least one reviewer
-    * Prior to creating a pull request, a developer should:
-        * Make sure `npm test` runs without errors
-        * Make sure coverage is above 80%
-        * Make sure the app is working properly (back-end and front-end)
-    * Prior to aproving the PR, reviewer should also run tests and check coverage.
+  * Mandatory to merge from `feature/xxxxx` to `develop` (pushing directly to `develop` is not allowed)
+  * Should have at least one reviewer
+  * Prior to creating a pull request, a developer should:
+    * Make sure `npm test` runs without errors
+    * Make sure coverage is above 80%
+    * Make sure the app is working properly (back-end and front-end)
+  * Prior to aproving the PR, reviewer should also run tests and check coverage.
 
-## React
+### React
 
 This application uses [Next.js](https://nextjs.org/), a React Framework.
 
 It allows to have server-side rendering, simplifies routing and many other good stuffs.
 
-## Clean Architecture
+### Clean Architecture
 
 This application is layered according to [Clean Architecture](https://www.youtube.com/watch?v=o_TH-Y78tt4) standards (or [in French](https://www.youtube.com/watch?v=ROxco3DGjKk))
 
-```
-
+```txt
 ├── components          # React components
 │
 ├── config              # for both front-end and back-end
@@ -95,29 +93,36 @@ This application is layered according to [Clean Architecture](https://www.youtub
 
 > NB: This architecture is right now only implemented on the back-end (API). It also has to be applied on the front-end.
 
-## Dev Guidelines
+### Dev Guidelines
 
 Code should follow AXA Dev Guidelines. Especially naming conventions and SOLID principles.
 
-## Tests
+### Tests
 
-### API (back-end)
+#### API (back-end)
 
 * ATDD (End-to-end)
-    * For key features only
-    * Excluded from coverage calculation
+  * For key features only
+  * Excluded from coverage calculation
 * BDD (Scenarios)
-    * Only for scenarios which add value to the product
-    * Cross only app use-cases & repositories
-    * Should mock infrastructure
+  * Only for scenarios which add value to the product
+  * Cross only app use-cases & repositories
+  * Should mock infrastructure
 * Unit-tests
-    * Infrastrucures
-    * Database models (mongoose schema & static methods)
-    * Unexpected errors in use-cases (these tests do not add any value, but are necessary)
-    * Middlewares (error, authentication, ...)
+  * Infrastrucures
+  * Database models (mongoose schema & static methods)
+  * Unexpected errors in use-cases (these tests do not add any value, but are necessary)
+  * Middlewares (error, authentication, ...)
 
-# Cheatsheets
+## Cheatsheets
 
-* Git commit messages: https://gist.github.com/stephenparish/9941e89d80e2bc58a153
-* Git flow: https://danielkummer.github.io/git-flow-cheatsheet/
-* Markdown: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* [Git commit messages - AgularJS Standard](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
+* [Git flow](https://danielkummer.github.io/git-flow-cheatsheet/)
+* [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+## Further reading
+
+* [NodeJS and Good Practices](https://blog.codeminer42.com/nodejs-and-good-practices-354e7d763626)
+* [Repository Pattern](https://martinfowler.com/eaaCatalog/repository.html)
+* [SOLID Principles](https://stackify.com/solid-design-principles/)
+* [Clean architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
