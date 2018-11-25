@@ -10,8 +10,12 @@ const {
   GetByEmail,
   DeleteUser,
 } = require('./app/user');
+const {
+  CreateRide
+} = require('./app/ride');
 
 const UserSerializer = require('./interfaces/http/controller/user/UserSerializer');
+const RideSerializer = require('./interfaces/http/controller/ride/RideSerializer');
 
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
@@ -21,8 +25,9 @@ const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
 const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware');
 
 const MongoUsersRepository = require('./infrastructure/repository/user/MongoUsersRepository');
+const MongoRidesRepository = require('./infrastructure/repository/ride/MongoRidesRepository');
 
-const { DbUser: DbUserModel } = require('./infrastructure/database/models');
+const { DbRide: DbRideModel, DbUser: DbUserModel } = require('./infrastructure/database/models');
 
 const logger = require('./infrastructure/logging/logger');
 
@@ -49,10 +54,12 @@ container.register({
 
   //Repositories
   usersRepository: asClass(MongoUsersRepository, { lifetime: Lifetime.SINGLETON }),
+  ridesRepository: asClass(MongoRidesRepository, { lifetime: Lifetime.SINGLETON }),
 
   //Database
   database: asFunction(database),
   DbUserModel: asValue(DbUserModel),
+  DbRideModel: asValue(DbRideModel),
 
   //Operations
   createUser: asClass(CreateUser),
@@ -61,7 +68,10 @@ container.register({
   getUserByEmail: asClass(GetByEmail),
   deleteUser: asClass(DeleteUser),
 
+  createRide: asClass(CreateRide),
+
   //Serializer
+  rideSerializer: asValue(RideSerializer),
   userSerializer: asValue(UserSerializer)
 });
 
