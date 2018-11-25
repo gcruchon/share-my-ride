@@ -37,7 +37,7 @@ describe('Infra :: Database :: Models', () => {
   });
   describe('DbUser', () => {
     it('should be valid if all is OK', (done) => {
-      const validUser = new DbUser({ email: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
+      const validUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
       const error = validUser.validateSync();
       expect(error).to.be.undefined;
       done();
@@ -53,7 +53,7 @@ describe('Infra :: Database :: Models', () => {
     });
 
     it('should be invalid if email is in the wrong format', (done) => {
-      const invalidUser = new DbUser({ email: 'toto', lastname: 'CRUCHON', firstname: 'Gilles' });
+      const invalidUser = new DbUser({ _id: 'toto', lastname: 'CRUCHON', firstname: 'Gilles' });
       const error = invalidUser.validateSync();
       expect(error.name).to.equal('ValidationError');
       expect(error.errors).to.exist;
@@ -62,7 +62,7 @@ describe('Infra :: Database :: Models', () => {
     });
 
     it('should be invalid if lastname is empty', (done) => {
-      const invalidUser = new DbUser({ email: 'gilles.cruchon@gmail.com', firstname: 'Gilles' });
+      const invalidUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', firstname: 'Gilles' });
       const error = invalidUser.validateSync();
       expect(error.name).to.equal('ValidationError');
       expect(error.errors).to.exist;
@@ -71,7 +71,7 @@ describe('Infra :: Database :: Models', () => {
     });
 
     it('should be invalid if firstname is empty', (done) => {
-      const invalidUser = new DbUser({ email: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON' });
+      const invalidUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON' });
       const error = invalidUser.validateSync();
       expect(error.name).to.equal('ValidationError');
       expect(error.errors).to.exist;
@@ -80,18 +80,18 @@ describe('Infra :: Database :: Models', () => {
     });
 
     it('should fetch user by email', async () => {
-      const expectedUser = new DbUser({ email: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
+      const expectedUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
       const findOneStub = sinon.stub(DbUser, 'findOne').resolves(expectedUser);
 
       const result = await DbUser.getByEmail('gilles.cruchon@gmail.com');
       sinon.assert.calledOnce(findOneStub);
-      sinon.assert.calledWith(findOneStub, { email: 'gilles.cruchon@gmail.com' });
+      sinon.assert.calledWith(findOneStub, { _id: 'gilles.cruchon@gmail.com' });
       expect(result).to.equal(expectedUser);
       findOneStub.restore();
     });
 
     it('should check if a user exists', async () => {
-      const expectedUser = new DbUser({ email: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
+      const expectedUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON', firstname: 'Gilles' });
       const mockFindOne = {
         exec: async () => {
           return expectedUser;
@@ -101,7 +101,7 @@ describe('Infra :: Database :: Models', () => {
 
       const result = await DbUser.exist('gilles.cruchon@gmail.com');
       sinon.assert.calledOnce(findOneStub);
-      sinon.assert.calledWith(findOneStub, { email: 'gilles.cruchon@gmail.com' });
+      sinon.assert.calledWith(findOneStub, { _id: 'gilles.cruchon@gmail.com' });
       expect(result).to.equal(true);
       findOneStub.restore();
     });
@@ -116,15 +116,15 @@ describe('Infra :: Database :: Models', () => {
 
       const result = await DbUser.exist('gilles.cruchon@gmail.com');
       sinon.assert.calledOnce(findOneStub);
-      sinon.assert.calledWith(findOneStub, { email: 'gilles.cruchon@gmail.com' });
+      sinon.assert.calledWith(findOneStub, { _id: 'gilles.cruchon@gmail.com' });
       expect(result).to.equal(false);
       findOneStub.restore();
     });
 
     it('should list users', async () => {
       const expectedUsers = [
-        { email: 'user1@gmail.com', lastname: 'USER', firstname: 'One' },
-        { email: 'user2n@gmail.com', lastname: 'USER', firstname: 'Two' }
+        { _id: 'user1@gmail.com', lastname: 'USER', firstname: 'One' },
+        { _id: 'user2n@gmail.com', lastname: 'USER', firstname: 'Two' }
       ];
       const exec = sinon.stub().resolves(expectedUsers);
       const limit = sinon.stub().returns({ exec });

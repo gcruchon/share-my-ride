@@ -1,16 +1,14 @@
 const User = require('../../../domain/user/User');
 
 const MongoUserMapper = {
-  toEntity( dataValues ) {
-    const { email, lastname, firstname, score } = dataValues;
-      
-    return new User({ email, lastname, firstname, score });
+  toEntity( dbUser ) {
+    const { _id, lastname, firstname, score } = dbUser;
+    return new User({ email: _id, lastname, firstname, score });
   },
       
-  toDatabase(survivor) {
-    const { email, lastname, firstname, score } = survivor;
-      
-    return { email, lastname, firstname, score };
+  toDatabase(entityUser) {
+    const { email, lastname, firstname, score } = entityUser;
+    return { _id: email, lastname, firstname, score };
   }
 };
 

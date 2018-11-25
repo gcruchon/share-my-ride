@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
+const { isEmailValid } = require('../utils/validation');
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
+  _id: { type: String, required: true },
   lastname: { type: String, required: true },
   firstname: { type: String, required: true },
   score: { type: Number, required: true, default: 0 }
@@ -18,7 +18,7 @@ userSchema.statics = {
      * @returns {Promise<User, APIError>}
      */
   getByEmail(email) {
-    return this.findOne({ email });
+    return this.findOne({ _id: email });
   },
 
   /**
@@ -27,7 +27,7 @@ userSchema.statics = {
      * @returns {boolean}
      */
   exist(email) {
-    return this.findOne({ email })
+    return this.findOne({ _id: email })
       .exec()
       .then((user) => {
         if (user) {
@@ -67,12 +67,8 @@ const errorMessageTransformer = (error, doc, next) => {
 // in question, and the `next()` function
 userSchema.post('save', errorMessageTransformer);
 
-userSchema.path('email').validate(function (email) {
-  const result = Joi.validate(email, Joi.string().email());
-  if (result.error) {
-    return false;
-  }
-  return true;
+userSchema.path('_id').validate(function (email) {
+  return isEmailValid(email);
 }, 'The e-mail field is not valid.');
 
 const DbUser = mongoose.model('User', userSchema);
