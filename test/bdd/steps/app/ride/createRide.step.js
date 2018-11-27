@@ -127,20 +127,20 @@ After({ tags: '@app and @ride and @create' }, function () {
 
 // Some utils
 
-const getRideFromDataRow = ({ driver, passenger1, passenger2, passenger3, passenger4, date }) => {
+const getRideFromDataRow = ({ driverEmail, passenger1, passenger2, passenger3, passenger4, date }) => {
   const ride = {
-    driver,
-    passengers:[passenger1],
+    driverEmail,
+    passengerEmails:[passenger1],
     date
   };
   if( passenger2 ) {
-    ride.passengers.push(passenger2);
+    ride.passengerEmails.push(passenger2);
   }
   if( passenger3 ) {
-    ride.passengers.push(passenger3);
+    ride.passengerEmails.push(passenger3);
   }
   if( passenger4 ) {
-    ride.passengers.push(passenger4);
+    ride.passengerEmails.push(passenger4);
   }
   return ride;
 };

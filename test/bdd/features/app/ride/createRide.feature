@@ -15,7 +15,7 @@ Feature: Create a ride
             | lastname  | firstname | email                | score |
             | GOGUILLON | Fabien    | fgoguillon@gmail.com | 0     |
         And the affected ride is:
-            | driver                   | passenger1           | passenger2 | passenger3 | passenger4 | date                 |
+            | driverEmail              | passenger1           | passenger2 | passenger3 | passenger4 | date                 |
             | gilles.cruchon@gmail.com | fgoguillon@gmail.com |            |            |            | 2018-11-24T10:33:23Z |
         When I create this ride
         Then the operation is successful
