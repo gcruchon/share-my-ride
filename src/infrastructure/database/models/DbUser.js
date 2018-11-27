@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { isEmailValid } = require('../utils/validation');
+const errorMessages = require('../utils/errorMessages');
 
 const userSchema = new mongoose.Schema({
   _id: { type: String, required: true },
@@ -56,7 +57,7 @@ userSchema.statics = {
 const errorMessageTransformer = (error, doc, next) => {
   if (error.code === 11000) {
     const newError = new Error('ValidationError');
-    newError.details = 'Duplicate found';
+    newError.details = errorMessages.common.duplicateFound;
     next(newError);
   } else {
     next(error);
@@ -69,7 +70,7 @@ userSchema.post('save', errorMessageTransformer);
 
 userSchema.path('_id').validate(function (email) {
   return isEmailValid(email);
-}, 'The e-mail field is not valid.');
+}, errorMessages.user.invalidEmail);
 
 const DbUser = mongoose.model('User', userSchema);
 
