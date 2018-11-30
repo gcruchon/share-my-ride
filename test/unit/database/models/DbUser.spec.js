@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const DbUser = require('src/infrastructure/database/models/DbUser');
+const Errors = require('src/infrastructure/database/utils/Errors');
 
 describe('Infra :: Database :: Models', () => {
   describe('DbUser - middleware', () => {
@@ -16,8 +17,8 @@ describe('Infra :: Database :: Models', () => {
         sinon.assert.calledOnce(next);
         const [errorThrown] = next.lastCall.args;
         expect(errorThrown).to.be.an('Error');
-        expect(errorThrown.message).to.equal('ValidationError');
-        expect(errorThrown.details).to.equal('Duplicate found');
+        expect(errorThrown.message).to.equal(Errors.types.validationError);
+        expect(errorThrown.details).to.equal(Errors.messages.common.duplicateFound);
         done();
       });
 
@@ -46,7 +47,7 @@ describe('Infra :: Database :: Models', () => {
     it('should be invalid if email is empty', (done) => {
       const invalidUser = new DbUser({ lastname: 'CRUCHON', firstname: 'Gilles' });
       const error = invalidUser.validateSync();
-      expect(error.name).to.equal('ValidationError');
+      expect(error.name).to.equal(Errors.types.validationError);
       expect(error.errors).to.exist;
       expect(error.errors.email).to.exist;
       done();
@@ -55,7 +56,7 @@ describe('Infra :: Database :: Models', () => {
     it('should be invalid if email is in the wrong format', (done) => {
       const invalidUser = new DbUser({ _id: 'toto', lastname: 'CRUCHON', firstname: 'Gilles' });
       const error = invalidUser.validateSync();
-      expect(error.name).to.equal('ValidationError');
+      expect(error.name).to.equal(Errors.types.validationError);
       expect(error.errors).to.exist;
       expect(error.errors.email).to.exist;
       done();
@@ -64,7 +65,7 @@ describe('Infra :: Database :: Models', () => {
     it('should be invalid if lastname is empty', (done) => {
       const invalidUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', firstname: 'Gilles' });
       const error = invalidUser.validateSync();
-      expect(error.name).to.equal('ValidationError');
+      expect(error.name).to.equal(Errors.types.validationError);
       expect(error.errors).to.exist;
       expect(error.errors.lastname).to.exist;
       done();
@@ -73,7 +74,7 @@ describe('Infra :: Database :: Models', () => {
     it('should be invalid if firstname is empty', (done) => {
       const invalidUser = new DbUser({ _id: 'gilles.cruchon@gmail.com', lastname: 'CRUCHON' });
       const error = invalidUser.validateSync();
-      expect(error.name).to.equal('ValidationError');
+      expect(error.name).to.equal(Errors.types.validationError);
       expect(error.errors).to.exist;
       expect(error.errors.firstname).to.exist;
       done();

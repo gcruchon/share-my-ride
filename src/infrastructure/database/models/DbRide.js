@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { isEmailValid } = require('../utils/validation');
-const errorMessages = require('../utils/errorMessages');
+const Errors = require('../utils/Errors');
 
 
 const rideSchema = new mongoose.Schema({
@@ -11,8 +11,8 @@ const rideSchema = new mongoose.Schema({
 
 const errorMessageTransformer = (error, doc, next) => {
   if (error.code === 11000) {
-    const newError = new Error('ValidationError');
-    newError.details = errorMessages.common.duplicateFound;
+    const newError = new Error(Errors.types.validationError);
+    newError.details = Errors.messages.common.duplicateFound;
     next(newError);
   } else {
     next(error);
@@ -28,11 +28,11 @@ rideSchema.post('save', async (doc) => {
 
 rideSchema.path('driver').validate(function (email) {
   return isEmailValid(email);
-}, errorMessages.ride.invalidDriverEmail);
+}, Errors.messages.ride.invalidDriverEmail);
 
 rideSchema.path('passengers').validate(function (passengers) {
   return passengers.reduce((previouslyValid, currentPassenger) => previouslyValid && isEmailValid(currentPassenger), true);
-}, errorMessages.ride.invalidPassengerEmail);
+}, Errors.messages.ride.invalidPassengerEmail);
 
 const DbRide = mongoose.model('Ride', rideSchema);
 
