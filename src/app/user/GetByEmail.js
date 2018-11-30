@@ -1,9 +1,10 @@
 const Operation = require('../Operation');
 
 class GetByEmail extends Operation {
-  constructor({ usersRepository }) {
+  constructor({ usersRepository, repositoryErrors }) {
     super();
     this.usersRepository = usersRepository;
+    this.repositoryErrors = repositoryErrors;
   }
 
   async execute(email) {
@@ -13,7 +14,7 @@ class GetByEmail extends Operation {
       const user = await this.usersRepository.getUserByEmail(email);
       this.emit(SUCCESS, user);
     } catch(error) {
-      if(error.message === 'ValidationError') {
+      if(error.message === this.repositoryErrors.types.validationError) {
         return this.emit(VALIDATION_ERROR, error);
       }
       this.emit(ERROR, error);

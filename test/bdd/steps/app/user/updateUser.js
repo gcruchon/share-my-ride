@@ -4,7 +4,8 @@ const UpdateUser = require('src/app/user/UpdateUser');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
-const updateUser = new UpdateUser({ usersRepository });
+const repositoryErrors = require('src/infrastructure/repository/Errors');
+const updateUser = new UpdateUser({ usersRepository, repositoryErrors });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = updateUser.outputs;
 
 // Prepare

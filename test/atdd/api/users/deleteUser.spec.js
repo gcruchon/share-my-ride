@@ -37,7 +37,7 @@ describe('API :: DELETE /api/users', () => {
         .delete('/api/users/' + testUser.email)
         .expect(404);
       expect(body.type).to.equal('ValidationError');
-      expect(body.details.message).to.equal('User not exist');
+      expect(body.details.message).to.equal('User not found');
     });
   });
 

@@ -7,6 +7,7 @@ const MongoRideRepository = require('src/infrastructure/repository/ride/MongoRid
 const DbRideModel = require('src/infrastructure/database/models/DbRide');
 const ridesRepository = new MongoRideRepository({ DbRideModel });
 const UserMapper = require('src/infrastructure/repository/user/MongoUserMapper');
+const repositoryErrors = require('src/infrastructure/repository/Errors');
 
 // Prepare
 Before({ tags: '@app and @ride and @create' }, function () {
@@ -19,7 +20,7 @@ Before({ tags: '@app and @ride and @create' }, function () {
 
   this.getUserByEmailStub = sinon.stub();
   this.usersRepositoryStub = { getUserByEmail: this.getUserByEmailStub };
-  this.createRide = new CreateRide({ ridesRepository, usersRepository: this.usersRepositoryStub });
+  this.createRide = new CreateRide({ ridesRepository, usersRepository: this.usersRepositoryStub, repositoryErrors });
   const { SUCCESS, ERROR, VALIDATION_ERROR } = this.createRide.outputs;
 
   this.createRide.on(SUCCESS, this.spySuccess);

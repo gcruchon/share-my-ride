@@ -11,7 +11,8 @@ describe('App :: user :: CreateUser', () => {
           throw error;
         }
       };
-      const createUser = new CreateUser({ usersRepository });
+      const repositoryErrors = require('src/infrastructure/repository/Errors');
+      const createUser = new CreateUser({ usersRepository, repositoryErrors });
       const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
       const spySuccess = sinon.spy();
       const spyError = sinon.spy();

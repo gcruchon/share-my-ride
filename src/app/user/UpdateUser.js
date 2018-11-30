@@ -2,9 +2,10 @@ const Operation = require('../Operation');
 const User = require('../../domain/user/User');
 
 class UpdateUser extends Operation {
-  constructor({ usersRepository }) {
+  constructor({ usersRepository, repositoryErrors }) {
     super();
     this.usersRepository = usersRepository;
+    this.repositoryErrors = repositoryErrors;
   }
 
   async execute({ email, lastname, firstname, score }) {
@@ -15,7 +16,7 @@ class UpdateUser extends Operation {
       const updateUser = await this.usersRepository.update(user);
       this.emit(SUCCESS, updateUser);
     } catch (error) {
-      if (error.message === 'ValidationError') {
+      if (error.message === this.repositoryErrors.types.validationError) {
         return this.emit(VALIDATION_ERROR, error);
       }
       this.emit(ERROR, error);

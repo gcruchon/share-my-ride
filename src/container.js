@@ -26,6 +26,7 @@ const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware')
 
 const MongoUsersRepository = require('./infrastructure/repository/user/MongoUsersRepository');
 const MongoRidesRepository = require('./infrastructure/repository/ride/MongoRidesRepository');
+const RepositoryErrors = require('./infrastructure/repository/Errors');
 
 const { DbRide: DbRideModel, DbUser: DbUserModel } = require('./infrastructure/database/models');
 
@@ -55,6 +56,7 @@ container.register({
   //Repositories
   usersRepository: asClass(MongoUsersRepository, { lifetime: Lifetime.SINGLETON }),
   ridesRepository: asClass(MongoRidesRepository, { lifetime: Lifetime.SINGLETON }),
+  repositoryErrors: asValue(RepositoryErrors),
 
   //Database
   database: asFunction(database),

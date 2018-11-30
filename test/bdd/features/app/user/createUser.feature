@@ -7,58 +7,58 @@ Feature: Create a user
 
     Scenario: Create a user providing all required fields
         Given the affected user is:
-        | lastname  | firstname  | email                     |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  |
+            | lastname | firstname | email                    |
+            | CRUCHON  | Gilles    | gilles.cruchon@gmail.com |
         And user "gilles.cruchon@gmail.com" does not exist in the system
         When I create this user
         Then the operation is successful
         And I get the user
-        | lastname  | firstname  | email                     | score |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  | 0     |
+            | lastname | firstname | email                    | score |
+            | CRUCHON  | Gilles    | gilles.cruchon@gmail.com | 0     |
 
     Scenario: Create user duplicated user
         Given the affected user is:
-        | lastname  | firstname  | email                     |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  |
+            | lastname | firstname | email                    |
+            | CRUCHON  | Gilles    | gilles.cruchon@gmail.com |
         And user "gilles.cruchon@gmail.com" already exists in the system
         When I create this user
         Then the operation is failing
-        And I get a "User already exist" error
+        And I get a "User already exists" error
 
     Scenario: Create a user without email
         Given the affected user is:
-        | lastname  | firstname  |
-        | CRUCHON   | Gilles     |
+            | lastname | firstname |
+            | CRUCHON  | Gilles    |
         When I create this user
         Then the operation is failing
         And I get the missing fields:
-        | email |
+            | email |
 
     Scenario: Create a user without lastname
         Given the affected user is:
-        | firstname  | email                     |
-        | Gilles     | gilles.cruchon@gmail.com  |
+            | firstname | email                    |
+            | Gilles    | gilles.cruchon@gmail.com |
         When I create this user
         Then the operation is failing
         And I get the missing fields:
-        | lastname |
+            | lastname |
 
     Scenario: Create a user without firstname
         Given the affected user is:
-        | lastname  | email                     |
-        | CRUCHON   | gilles.cruchon@gmail.com  |
+            | lastname | email                    |
+            | CRUCHON  | gilles.cruchon@gmail.com |
         When I create this user
         Then the operation is failing
         And I get the missing fields:
-        | firstname |
+            | firstname |
 
     Scenario: Create a user without lastname & firstname
         Given the affected user is:
-        | email                     |
-        | gilles.cruchon@gmail.com  |
+            | email                    |
+            | gilles.cruchon@gmail.com |
         When I create this user
         Then the operation is failing
         And I get the missing fields:
-        | lastname |
-        | firstname |
+            | lastname  |
+            | firstname |
 
