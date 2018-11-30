@@ -12,12 +12,12 @@ Feature: Get all users
 
     Scenario: Getting all users when less then 50 are created
         Given the system contains these users:
-        | lastname  | firstname  | email                     | score |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  | 0     |
-        | CRUCHON   | Maryna     | maryna.cruchon@gmail.com  | 0     |
+            | lastname | firstname | email                    | score |
+            | CRUCHON  | Gilles    | gilles.cruchon@gmail.com | 0     |
+            | CRUCHON  | Fabien    | fgoguillon@gmail.com     | 0     |
         When I get all users
         Then the operation is successful
         And I get these users:
-        | lastname  | firstname  | email                     | score |
-        | CRUCHON   | Gilles     | gilles.cruchon@gmail.com  | 0     |
-        | CRUCHON   | Maryna     | maryna.cruchon@gmail.com  | 0     |
+            | lastname | firstname | email                    | score |
+            | CRUCHON  | Gilles    | gilles.cruchon@gmail.com | 0     |
+            | CRUCHON  | Fabien    | fgoguillon@gmail.com     | 0     |

@@ -4,6 +4,7 @@ const { expect } = require('chai');
 const mongoose = require('mongoose');
 
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
+const repositoryErrors = require('src/infrastructure/repository/Errors');
 
 // Prepare
 Before({ tags: '@app and @user' }, function () {
@@ -80,7 +81,7 @@ Then('I get the user', function (dataTable) {
 Then('I get a {string} error', function (errorMessage) {
   const [ errorThrown ] = this.spyValidationError.lastCall.args;
   expect(errorThrown).to.be.a('Error');
-  expect(errorThrown.message).to.equal('ValidationError');
+  expect(errorThrown.message).to.equal(repositoryErrors.types.validationError);
   expect(errorThrown.details).to.deep.equal({ message: errorMessage });
 });
 

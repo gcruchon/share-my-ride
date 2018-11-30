@@ -1,4 +1,5 @@
 const RideMapper = require('./MongoRideMapper');
+const Errors = require('../Errors');
 
 
 class MongoRideRepository {
@@ -27,7 +28,7 @@ class MongoRideRepository {
     const { valid, errors } = ride.validate();
 
     if (!valid) {
-      const error = new Error('ValidationError');
+      const error = new Error(Errors.types.validationError);
       error.details = errors;
       throw error;
     }

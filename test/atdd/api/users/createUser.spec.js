@@ -37,7 +37,7 @@ describe('API :: POST /api/users', () => {
         .send(testUser)
         .expect(400);
       expect(body.type).to.equal('ValidationError');
-      expect(body.details.message).to.equal('User already exist');
+      expect(body.details.message).to.equal('User already exists');
     });
   });
 

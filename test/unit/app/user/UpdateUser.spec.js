@@ -11,7 +11,8 @@ describe('App :: user :: UpdateUser', () => {
           throw error;
         }
       };
-      const updateUser = new UpdateUser({ usersRepository });
+      const repositoryErrors = require('src/infrastructure/repository/Errors');
+      const updateUser = new UpdateUser({ usersRepository, repositoryErrors });
       const { SUCCESS, ERROR, VALIDATION_ERROR } = updateUser.outputs;
       const spySuccess = sinon.spy();
       const spyError = sinon.spy();

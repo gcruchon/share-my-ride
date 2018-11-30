@@ -4,7 +4,8 @@ const GetByEmail = require('src/app/user/GetByEmail');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
-const getByEmail = new GetByEmail({ usersRepository });
+const repositoryErrors = require('src/infrastructure/repository/Errors');
+const getByEmail = new GetByEmail({ usersRepository, repositoryErrors });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = getByEmail.outputs;
 
 // Prepare

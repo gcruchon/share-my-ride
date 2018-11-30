@@ -2,10 +2,11 @@ const Operation = require('../Operation');
 const Ride = require('../../domain/ride/Ride');
 
 class CreateRide extends Operation {
-  constructor({ ridesRepository, usersRepository }) {
+  constructor({ ridesRepository, usersRepository, repositoryErrors }) {
     super();
     this.ridesRepository = ridesRepository;
     this.usersRepository = usersRepository;
+    this.repositoryErrors = repositoryErrors;
   }
 
   async execute({ driverEmail, passengerEmails, date }) {
@@ -25,7 +26,7 @@ class CreateRide extends Operation {
 
       this.emit(SUCCESS, newRide);
     } catch (error) {
-      if (error.message === 'ValidationError') {
+      if (error.message === this.repositoryErrors.types.validationError) {
         return this.emit(VALIDATION_ERROR, error);
       }
 

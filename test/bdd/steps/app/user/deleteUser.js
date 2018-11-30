@@ -4,7 +4,8 @@ const DeleteUser = require('src/app/user/DeleteUser');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
-const deleteUser = new DeleteUser({ usersRepository });
+const repositoryErrors = require('src/infrastructure/repository/Errors');
+const deleteUser = new DeleteUser({ usersRepository, repositoryErrors });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = deleteUser.outputs;
 
 // Prepare

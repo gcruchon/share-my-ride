@@ -5,7 +5,8 @@ const CreateUser = require('src/app/user/CreateUser');
 const MongoUserRepository = require('src/infrastructure/repository/user/MongoUsersRepository');
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
-const createUser = new CreateUser({ usersRepository });
+const repositoryErrors = require('src/infrastructure/repository/Errors');
+const createUser = new CreateUser({ usersRepository, repositoryErrors });
 const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
 
 // Prepare
@@ -33,7 +34,7 @@ Then('I get the missing fields:', function (dataTable) {
   );
   const [ errorThrown ] = this.spyValidationError.lastCall.args;
   expect(errorThrown).to.be.a('Error');
-  expect(errorThrown.message).to.equal('ValidationError');
+  expect(errorThrown.message).to.equal(repositoryErrors.types.validationError);
   expect(errorThrown.details).to.deep.equal(expectedErrorDetails);
 });
 

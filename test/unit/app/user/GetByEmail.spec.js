@@ -11,7 +11,8 @@ describe('App :: user :: GetByEmail', () => {
           throw error;
         }
       };
-      const getByEmail = new GetByEmail({ usersRepository });
+      const repositoryErrors = require('src/infrastructure/repository/Errors');
+      const getByEmail = new GetByEmail({ usersRepository, repositoryErrors });
       const { SUCCESS, ERROR, VALIDATION_ERROR } = getByEmail.outputs;
       const spySuccess = sinon.spy();
       const spyError = sinon.spy();

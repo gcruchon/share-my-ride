@@ -9,7 +9,7 @@ Feature: Get user by email
             | lastname | firstname | email                    |
             | CRUCHON  | Gilles    | gilles.cruchon@gmail.com |
         Then the operation is failing
-        And I get a "User with email gilles.cruchon@gmail.com not found" error
+        And I get a "User not found" error
 
     Scenario: Updating an existing user
         Given the system contains these users:

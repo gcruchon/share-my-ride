@@ -1,4 +1,5 @@
 const UserMapper = require('./MongoUserMapper');
+const Errors = require('../Errors');
 
 
 class MongoUserRepository {
@@ -31,10 +32,10 @@ class MongoUserRepository {
     // Validate user throw error if any
     await this._validate(user);
     const dbUser = await this._getDbUserByEmail(user);
-    const { email, lastname, firstname } = user;
+    const { lastname, firstname } = user;
     if (!dbUser) {
-      const error = new Error('ValidationError');
-      error.details = { message: `User with email ${email} not found` };
+      const error = new Error(Errors.types.validationError);
+      error.details = { message: Errors.messages.user.notFound };
       throw error;
     }
     dbUser.lastname = lastname;
@@ -46,8 +47,8 @@ class MongoUserRepository {
   async remove(email) {
     const dbUser = await this._getDbUserByEmail({ email });
     if (!dbUser) {
-      const error = new Error('ValidationError');
-      error.details = { message: 'User not exist' };
+      const error = new Error(Errors.types.validationError);
+      error.details = { message: Errors.messages.user.notFound };
       throw error;
     }
     const deletedDbUser = await dbUser.remove();
@@ -57,8 +58,8 @@ class MongoUserRepository {
   async getUserByEmail(email) {
     const dbUser = await this._getDbUserByEmail({ email });
     if (!dbUser) {
-      const error = new Error('ValidationError');
-      error.details = { message: `User with email ${email} not found` };
+      const error = new Error(Errors.types.validationError);
+      error.details = { message: Errors.messages.user.notFound };
       throw error;
     }
 
@@ -74,8 +75,8 @@ class MongoUserRepository {
   async _checkExistance({ email }) {
     // Validate wether user already exist
     if (await this.DbUserModel.exist(email)) {
-      const error = new Error('ValidationError');
-      error.details = { message: 'User already exist' };
+      const error = new Error(Errors.types.validationError);
+      error.details = { message: Errors.messages.user.alreadyExists };
       throw error;
     }
 
@@ -87,7 +88,7 @@ class MongoUserRepository {
     const { valid, errors } = user.validate();
 
     if (!valid) {
-      const error = new Error('ValidationError');
+      const error = new Error(Errors.types.validationError);
       error.details = errors;
       throw error;
     }
