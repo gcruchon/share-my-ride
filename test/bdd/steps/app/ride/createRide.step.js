@@ -32,7 +32,7 @@ Before({ tags: '@app and @ride and @create' }, function () {
 Given('this driver exists:', function (dataTable) {
   const users = dataTable.hashes();
   if (users.length) {
-    [ this.driver ] = users;
+    [this.driver] = users;
   }
   this.driver._id = this.driver.email;
   this.getUserByEmailStub.withArgs(this.driver.email).resolves(UserMapper.toEntity(this.driver));
@@ -53,10 +53,10 @@ Given('the affected ride is:', function (dataTable) {
     [this.ride] = rides;
   }
   const mockRide = Object.assign({ _id: '5bfac879742a8b5572055f16' }, this.ride);
-  if( this.driver ){
+  if (this.driver) {
     mockRide.driver = this.driver;
   }
-  if( this.passengers ){
+  if (this.passengers) {
     mockRide.passengers = this.passengers;
   }
   this.stubDbRideSave.resolves(mockRide);
@@ -71,37 +71,23 @@ When('I create this ride', async function () {
 Then('I get the ride', function (dataTable) {
   const expectedRides = dataTable.hashes();
   if (expectedRides.length) {
-    const [ expectedRide ] = expectedRides;
-    const [ result ] = this.spySuccess.lastCall.args;
+    const [expectedRide] = expectedRides;
+    const [result] = this.spySuccess.lastCall.args;
     expect(result).to.be.an('Object');
     expect(result.driver).to.exist;
     expect(result.driver.email).to.exist;
     expect(result.driver.email).to.equal(expectedRide.driver);
     expect(result.passengers).to.exist;
     expect(result.passengers).to.be.an('Array');
-    expect(result.passengers).to.have.lengthOf.above(0);
-    if( expectedRide.passenger1 ){
-      expect(result.passengers[0]).to.exist;
-      expect(result.passengers[0].email).to.exist;
-      expect(result.passengers[0].email).to.equal(expectedRide.passenger1);
-    }
-    if( expectedRide.passenger2 ){
-      expect(result.passengers).to.have.lengthOf.above(1);
-      expect(result.passengers[1]).to.exist;
-      expect(result.passengers[1].email).to.exist;
-      expect(result.passengers[1].email).to.equal(expectedRide.passenger2);
-    }
-    if( expectedRide.passenger3 ){
-      expect(result.passengers).to.have.lengthOf.above(2);
-      expect(result.passengers[2]).to.exist;
-      expect(result.passengers[2].email).to.exist;
-      expect(result.passengers[2].email).to.equal(expectedRide.passenger3);
-    }
-    if( expectedRide.passenger4 ){
-      expect(result.passengers).to.have.lengthOf(4);
-      expect(result.passengers[3]).to.exist;
-      expect(result.passengers[3].email).to.exist;
-      expect(result.passengers[3].email).to.equal(expectedRide.passenger4);
+    for( let i = 0; i < 4; i++ ){
+      const key = 'passenger' + (i + 1);
+      const passengerEmail = expectedRide[key];
+      if( passengerEmail ){
+        expect(result.passengers).to.have.lengthOf.above(i, 'result.passengers');
+        expect(result.passengers[i]).to.exist;
+        expect(result.passengers[i].email).to.exist;
+        expect(result.passengers[i].email).to.equal(passengerEmail);
+      }
     }
   }
 });
@@ -128,20 +114,16 @@ After({ tags: '@app and @ride and @create' }, function () {
 
 // Some utils
 
-const getRideFromDataRow = ({ driverEmail, passenger1, passenger2, passenger3, passenger4, date }) => {
+const getRideFromDataRow = ({ date, driverEmail, ...passengers }) => {
   const ride = {
     driverEmail,
-    passengerEmails:[passenger1],
     date
   };
-  if( passenger2 ) {
-    ride.passengerEmails.push(passenger2);
-  }
-  if( passenger3 ) {
-    ride.passengerEmails.push(passenger3);
-  }
-  if( passenger4 ) {
-    ride.passengerEmails.push(passenger4);
-  }
-  return ride;
+  let passengerEmails = [];
+  Object.keys(passengers).forEach(key => {
+    if (passengers[key]) {
+      passengerEmails.push(passengers[key]);
+    }
+  });
+  return Object.assign(ride, { passengerEmails });
 };
