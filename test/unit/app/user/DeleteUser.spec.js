@@ -13,7 +13,7 @@ describe('App :: user :: DeleteeUser', () => {
       };
       const repositoryErrors = require('src/infrastructure/repository/Errors');
       const deleteUser = new DeleteUser({ usersRepository, repositoryErrors });
-      const { SUCCESS, ERROR, VALIDATION_ERROR } = deleteUser.outputs;
+      const [ SUCCESS, ERROR, VALIDATION_ERROR ] = deleteUser.outputs;
       const spySuccess = sinon.spy();
       const spyError = sinon.spy();
       const spyValidationError = sinon.spy();

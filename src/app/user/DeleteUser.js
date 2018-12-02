@@ -8,7 +8,7 @@ class DeleteUser extends Operation {
   }
 
   async execute(email) {
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
+    const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.outputs;
 
     try {
       const user = await this.usersRepository.remove(email);
@@ -22,6 +22,6 @@ class DeleteUser extends Operation {
   }
 }
 
-DeleteUser.setOutputs(['SUCCESS', 'ERROR', 'VALIDATION_ERROR']);
+DeleteUser.setOutputs([Symbol('SUCCESS'), Symbol('ERROR'), Symbol('VALIDATION_ERROR')]);
 
 module.exports = DeleteUser;

@@ -12,7 +12,7 @@ describe('App :: user :: GetAllUsers', () => {
         }
       };
       const getAllUsers = new GetAllUsers({ usersRepository });
-      const { SUCCESS, ERROR } = getAllUsers.outputs;
+      const [ SUCCESS, ERROR ] = getAllUsers.outputs;
       const spySuccess = sinon.spy();
       const spyError = sinon.spy();
             

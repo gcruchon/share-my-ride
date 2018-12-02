@@ -10,7 +10,7 @@ class CreateRide extends Operation {
   }
 
   async execute({ driverEmail, passengerEmails, date }) {
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
+    const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.outputs;
 
     const driver = await this.usersRepository.getUserByEmail(driverEmail);
 
@@ -35,6 +35,6 @@ class CreateRide extends Operation {
   }
 }
 
-CreateRide.setOutputs(['SUCCESS', 'ERROR', 'VALIDATION_ERROR']);
+CreateRide.setOutputs([Symbol('SUCCESS'), Symbol('ERROR'), Symbol('VALIDATION_ERROR')]);
 
 module.exports = CreateRide;

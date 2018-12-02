@@ -9,7 +9,7 @@ class CreateUser extends Operation {
   }
 
   async execute({ email, lastname, firstname, score }) {
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
+    const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.outputs;
 
 
     // Everything goes to repository must become Entity first
@@ -29,6 +29,6 @@ class CreateUser extends Operation {
   }
 }
 
-CreateUser.setOutputs(['SUCCESS', 'ERROR', 'VALIDATION_ERROR']);
+CreateUser.setOutputs([Symbol('SUCCESS'), Symbol('ERROR'), Symbol('VALIDATION_ERROR')]);
 
 module.exports = CreateUser;
