@@ -21,7 +21,7 @@ Before({ tags: '@app and @ride and @create' }, function () {
   this.getUserByEmailStub = sinon.stub();
   this.usersRepositoryStub = { getUserByEmail: this.getUserByEmailStub };
   this.createRide = new CreateRide({ ridesRepository, usersRepository: this.usersRepositoryStub, repositoryErrors });
-  const { SUCCESS, ERROR, VALIDATION_ERROR } = this.createRide.outputs;
+  const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.createRide.outputs;
 
   this.createRide.on(SUCCESS, this.spySuccess);
   this.createRide.on(ERROR, this.spyError);
@@ -103,7 +103,7 @@ After({ tags: '@app and @ride' }, function () {
   this.stubDbRideSave.restore();
 });
 After({ tags: '@app and @ride and @create' }, function () {
-  const { SUCCESS, ERROR, VALIDATION_ERROR } = this.createRide.outputs;
+  const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.createRide.outputs;
   this.createRide.removeAllListeners(SUCCESS);
   this.createRide.removeAllListeners(ERROR);
   this.createRide.removeAllListeners(VALIDATION_ERROR);

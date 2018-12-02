@@ -8,7 +8,7 @@ class GetByEmail extends Operation {
   }
 
   async execute(email) {
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
+    const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.outputs;
 
     try {
       const user = await this.usersRepository.getUserByEmail(email);
@@ -22,6 +22,6 @@ class GetByEmail extends Operation {
   }
 }
 
-GetByEmail.setOutputs(['SUCCESS', 'ERROR', 'VALIDATION_ERROR']);
+GetByEmail.setOutputs([Symbol('SUCCESS'), Symbol('ERROR'), Symbol('VALIDATION_ERROR')]);
 
 module.exports = GetByEmail;

@@ -5,20 +5,18 @@ describe('App :: Operation', () => {
   var CustomOperation;
 
   beforeEach(() => {
-    CustomOperation = class CustomOperation extends Operation {
-
-    };
-
-    CustomOperation.setOutputs(['SUCCESS']);
+    CustomOperation = class CustomOperation extends Operation { };
+    CustomOperation.setOutputs([Symbol('SUCCESS')]);
   });
 
   describe('#on', () => {
     context('when added handler for a valid output', () => {
       it('does not throw', () => {
         const operation = new CustomOperation();
+        const [SUCCESS] = operation.outputs;
 
         expect(() => {
-          operation.on(operation.outputs.SUCCESS, () => {});
+          operation.on(SUCCESS, () => { });
         }).to.not.throw;
       });
     });
@@ -28,8 +26,8 @@ describe('App :: Operation', () => {
         const operation = new CustomOperation();
 
         expect(() => {
-          operation.on('INVALID', () => {});
-        }).to.throw(Error, /Invalid output "INVALID" to operation CustomOperation/);
+          operation.on(Symbol('INVALID'), () => { });
+        }).to.throw(Error, /Invalid output "Symbol\(INVALID\)" to operation CustomOperation./);
       });
     });
   });

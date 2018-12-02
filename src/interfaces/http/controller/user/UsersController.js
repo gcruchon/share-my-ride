@@ -24,7 +24,7 @@ const UsersController = {
     return {
       _getAllUsers: (req, res, next) => {
         const { userSerializer } = req;
-        const { SUCCESS, ERROR } = getAllUsers.outputs;
+        const [ SUCCESS, ERROR ] = getAllUsers.outputs;
 
         getAllUsers
           .on(SUCCESS, (users) => {
@@ -43,7 +43,7 @@ const UsersController = {
     return {
       _getUserByEmail: (req, res, next) => {
         const { userSerializer } = req;
-        const { SUCCESS, ERROR, VALIDATION_ERROR } = getUserByEmail.outputs;
+        const [ SUCCESS, ERROR, VALIDATION_ERROR ] = getUserByEmail.outputs;
 
         getUserByEmail
           .on(SUCCESS, (user) => {
@@ -68,7 +68,7 @@ const UsersController = {
     return {
       _deleteUser: (req, res, next) => {
         const { userSerializer } = req;
-        const { SUCCESS, ERROR, VALIDATION_ERROR } = deleteUser.outputs;
+        const [ SUCCESS, ERROR, VALIDATION_ERROR ] = deleteUser.outputs;
 
         deleteUser
           .on(SUCCESS, (user) => {
@@ -93,7 +93,7 @@ const UsersController = {
     return {
       _createUser: (req, res, next) => {
         const { userSerializer } = req;
-        const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
+        const [ SUCCESS, ERROR, VALIDATION_ERROR ] = createUser.outputs;
 
         createUser
           .on(SUCCESS, (user) => {
@@ -118,7 +118,7 @@ const UsersController = {
     return {
       _updateUser: (req, res, next) => {
         const { userSerializer } = req;
-        const { SUCCESS, ERROR, VALIDATION_ERROR } = updateUser.outputs;
+        const [ SUCCESS, ERROR, VALIDATION_ERROR ] = updateUser.outputs;
         updateUser
           .on(SUCCESS, (user) => {
             res

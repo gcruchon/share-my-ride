@@ -9,7 +9,7 @@ class UpdateUser extends Operation {
   }
 
   async execute({ email, lastname, firstname, score }) {
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
+    const [ SUCCESS, ERROR, VALIDATION_ERROR ] = this.outputs;
     const user = new User({ email, lastname, firstname, score });
 
     try {
@@ -24,6 +24,6 @@ class UpdateUser extends Operation {
   }
 }
 
-UpdateUser.setOutputs(['SUCCESS', 'ERROR', 'VALIDATION_ERROR']);
+UpdateUser.setOutputs([Symbol('SUCCESS'), Symbol('ERROR'), Symbol('VALIDATION_ERROR')]);
 
 module.exports = UpdateUser;

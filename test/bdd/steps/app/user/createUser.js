@@ -7,7 +7,7 @@ const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
 const repositoryErrors = require('src/infrastructure/repository/Errors');
 const createUser = new CreateUser({ usersRepository, repositoryErrors });
-const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
+const [ SUCCESS, ERROR, VALIDATION_ERROR ] = createUser.outputs;
 
 // Prepare
 Before({ tags: '@app and @user and @create' }, function () {

@@ -6,7 +6,7 @@ const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
 const repositoryErrors = require('src/infrastructure/repository/Errors');
 const getByEmail = new GetByEmail({ usersRepository, repositoryErrors });
-const { SUCCESS, ERROR, VALIDATION_ERROR } = getByEmail.outputs;
+const [ SUCCESS, ERROR, VALIDATION_ERROR ] = getByEmail.outputs;
 
 // Prepare
 Before({ tags: '@app and @user and @getByEmail' }, function () {

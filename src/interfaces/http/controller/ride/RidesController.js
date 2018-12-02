@@ -20,7 +20,7 @@ const RidesController = {
     return {
       _createRide: (req, res, next) => {
         const { rideSerializer } = req;
-        const { SUCCESS, ERROR, VALIDATION_ERROR } = createRide.outputs;
+        const [ SUCCESS, ERROR, VALIDATION_ERROR ] = createRide.outputs;
 
         createRide
           .on(SUCCESS, (ride) => {

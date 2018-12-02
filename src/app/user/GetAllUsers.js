@@ -7,7 +7,7 @@ class GetAllUsers extends Operation {
   }
 
   async execute() {
-    const { SUCCESS, ERROR } = this.outputs;
+    const [ SUCCESS, ERROR ] = this.outputs;
 
     try {
       const users = await this.usersRepository.getAll();
@@ -18,6 +18,6 @@ class GetAllUsers extends Operation {
   }
 }
 
-GetAllUsers.setOutputs(['SUCCESS', 'ERROR']);
+GetAllUsers.setOutputs([Symbol('SUCCESS'), Symbol('ERROR')]);
 
 module.exports = GetAllUsers;

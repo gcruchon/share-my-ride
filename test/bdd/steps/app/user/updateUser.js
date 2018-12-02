@@ -6,7 +6,7 @@ const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
 const repositoryErrors = require('src/infrastructure/repository/Errors');
 const updateUser = new UpdateUser({ usersRepository, repositoryErrors });
-const { SUCCESS, ERROR, VALIDATION_ERROR } = updateUser.outputs;
+const [ SUCCESS, ERROR, VALIDATION_ERROR ] = updateUser.outputs;
 
 // Prepare
 Before({ tags: '@app and @user and @updateUser' }, function () {

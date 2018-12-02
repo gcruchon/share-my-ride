@@ -6,7 +6,7 @@ const MongoUserRepository = require('src/infrastructure/repository/user/MongoUse
 const DbUserModel = require('src/infrastructure/database/models/DbUser');
 const usersRepository = new MongoUserRepository({ DbUserModel });
 const getAllUser = new GetAllUsers({ usersRepository });
-const { SUCCESS, ERROR } = getAllUser.outputs;
+const [ SUCCESS, ERROR ] = getAllUser.outputs;
 
 // Prepare
 Before({ tags: '@app and @user and @getAll' }, function () {
