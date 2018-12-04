@@ -1,0 +1,17 @@
+{
+  "cwd": "./src",
+  "exclude": [
+    "container.js",
+    "app/Application.js",
+    "app/user/index.js",
+    "infrastructure/mongoose",
+    "infrastructure/logging/logger.js",
+    "interfaces/http",
+    "coverage"
+  ],
+  "reporter": [
+    "html",
+    "lcov",
+    "text-summary"
+  ]
+}
